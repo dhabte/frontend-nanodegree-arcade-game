@@ -1,6 +1,23 @@
 //CONSTANTS
 var BUG_WIDTH = -101;
 var CANVAS_WIDTH = 505;
+var XRESET_LOC = 200;
+var YRESET_LOC = 375;
+var BUG1_LOCX = 100;
+var BUG2_LOCX = 300;
+var BUG3_LOCX = 200;
+var BUG4_LOCX = 500;
+var BUG5_LOCX = 200;
+var BUG1_LOCY = 62;
+var BUG2_LOCY = 62;
+var BUG3_LOCY = 146;
+var BUG4_LOCY = 230;
+var BUG5_LOCY = 230;
+var BUG1_SPEED = 300;
+var BUG2_SPEED = 300;
+var BUG3_SPEED = 400;
+var BUG4_SPEED = 250;
+var BUG5_SPEED = 250;
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
     // Variables applied to each of our instances go here,
@@ -44,9 +61,9 @@ var Player = function(x,y,speed){
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-
+var player = new Player();
 Player.prototype.update = function() {
-       if(this.y <= 0){
+    if(this.y <= 0){
     alert('YOU WON');
     this.reset();
 
@@ -71,7 +88,13 @@ switch(keyCode){
 };
 
 // Now instantiate your objects.
+var bug1 = new Enemy(BUG1_LOCX,BUG1_LOCY,BUG1_SPEED);
+var bug2 = new Enemy(BUG2_LOCX,BUG2_LOCY,BUG2_SPEED);
+var bug3 = new Enemy(BUG3_LOCX,BUG3_LOCY,BUG3_SPEED);
+var bug4 = new Enemy(BUG4_LOCX,BUG4_LOCY,BUG4_SPEED);
+var bug5 = new Enemy(BUG5_LOCX,BUG5_LOCY,BUG5_SPEED);
 // Place all enemy objects in an array called allEnemies
+var allEnemies = [bug1, bug2, bug3, bug4, bug5];
 // Place the player object in a variable called player
 
 
