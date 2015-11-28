@@ -37,7 +37,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     if(this.x <= CANVAS_WIDTH){
-    this.x += this.speed * dt;
+    this.x += 1.5 * this.speed * dt;
     }else{
     this.x = BUG_WIDTH;
   }
@@ -86,7 +86,11 @@ switch(keyCode){
           break;
             }
 };
-
+Player.prototype.reset = function(){
+    this.x = XRESET_LOC;
+    this.y = YRESET_LOC;
+    this.lifeCount = 0;
+};
 // Now instantiate your objects.
 var bug1 = new Enemy(BUG1_LOCX,BUG1_LOCY,BUG1_SPEED);
 var bug2 = new Enemy(BUG2_LOCX,BUG2_LOCY,BUG2_SPEED);
@@ -96,9 +100,18 @@ var bug5 = new Enemy(BUG5_LOCX,BUG5_LOCY,BUG5_SPEED);
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [bug1, bug2, bug3, bug4, bug5];
 // Place the player object in a variable called player
-
-
-
+var player = new Player(XRESET_LOC,YRESET_LOC);
+function checkCollisions(){
+    for (var i = 0; i < allEnemies.length; i++) {
+        if ((allEnemies[i].x) <= player.x + 30 &&
+            (allEnemies[i].x + 30) >= (player.x) &&
+            (allEnemies[i].y)<= player.y + 30 &&
+            (allEnemies[i].y + 30) >= (player.y)) {
+          alert('YOU LOSE');
+          player.reset();
+        }
+    }
+}
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
