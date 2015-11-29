@@ -18,6 +18,8 @@ var BUG2_SPEED = 300;
 var BUG3_SPEED = 400;
 var BUG4_SPEED = 250;
 var BUG5_SPEED = 250;
+var SCORE = 0;
+var LIVES = 4;
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
     // Variables applied to each of our instances go here,
@@ -37,7 +39,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     if(this.x <= CANVAS_WIDTH){
-    this.x += 1.5 * this.speed * dt;
+    this.x += 0.5*this.speed * dt;
     }else{
     this.x = BUG_WIDTH;
   }
@@ -56,19 +58,23 @@ var Player = function(x,y,speed){
     this.speed = speed;
     this.sprite = 'images/char-boy.png';
     this.lifeCount = 0;
-    this.immortal = 0;
+    this.score = SCORE;
+    this.lives = LIVES;
 };
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    ctx.font = '25pt Courier New';
+    ctx.fillStyle = 'orange';
+    ctx.fillText('Score' + ' ' + this.score, -2, 30);
+    ctx.fillText('Lives' + ' ' + this.lives, 365, 30);
 };
-var player = new Player();
+//var player = new Player();
 Player.prototype.update = function() {
     if(this.y <= 0){
     alert('YOU WON');
     this.reset();
-
     }
-
 };
 Player.prototype.handleInput = function(keyCode) {
 switch(keyCode){
@@ -89,7 +95,7 @@ switch(keyCode){
 Player.prototype.reset = function(){
     this.x = XRESET_LOC;
     this.y = YRESET_LOC;
-    this.lifeCount = 0;
+
 };
 // Now instantiate your objects.
 var bug1 = new Enemy(BUG1_LOCX,BUG1_LOCY,BUG1_SPEED);
@@ -101,17 +107,20 @@ var bug5 = new Enemy(BUG5_LOCX,BUG5_LOCY,BUG5_SPEED);
 var allEnemies = [bug1, bug2, bug3, bug4, bug5];
 // Place the player object in a variable called player
 var player = new Player(XRESET_LOC,YRESET_LOC);
-function checkCollisions(){
+var checkCollisions = function(){
     for (var i = 0; i < allEnemies.length; i++) {
         if ((allEnemies[i].x) <= player.x + 30 &&
             (allEnemies[i].x + 30) >= (player.x) &&
             (allEnemies[i].y)<= player.y + 30 &&
             (allEnemies[i].y + 30) >= (player.y)) {
-          alert('YOU LOSE');
+            this.score -= 1;
+            this.lives -= 1;
+          //alert('YOU LOSE');
+          score++;
           player.reset();
         }
     }
-}
+};
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
