@@ -18,8 +18,10 @@ var BUG2_SPEED = 300;
 var BUG3_SPEED = 400;
 var BUG4_SPEED = 250;
 var BUG5_SPEED = 250;
-var SCORE = 0;
-var LIVES = 4;
+var score = " ";
+var lives = 4;
+
+
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
     // Variables applied to each of our instances go here,
@@ -42,8 +44,10 @@ Enemy.prototype.update = function(dt) {
     this.x += 0.5*this.speed * dt;
     }else{
     this.x = BUG_WIDTH;
-  }
+    }
 };
+
+
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -57,24 +61,48 @@ var Player = function(x,y,speed){
     this.y = y;
     this.speed = speed;
     this.sprite = 'images/char-boy.png';
-    this.lifeCount = 0;
-    this.score = SCORE;
-    this.lives = LIVES;
+    this.score = score;
+    this.lives = lives;
 };
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-
     ctx.font = '25pt Courier New';
     ctx.fillStyle = 'orange';
-    ctx.fillText('Score' + ' ' + this.score, -2, 30);
-    ctx.fillText('Lives' + ' ' + this.lives, 365, 30);
+    ctx.fillText("Score: "+this.score, 0, 30);
+    ctx.fillText('Lives' + ' ' +this.lives, 364, 30);
 };
 //var player = new Player();
 Player.prototype.update = function() {
+	var score = 0;
+	var lives = 4;
     if(this.y <= 0){
-    alert('YOU WON');
+    	ctx.clearRect(0, 0, 200, 200);
+        this.score++;
+        if(this.score>=10){
+        	alert('YOU WON');
+        }
+
+
     this.reset();
     }
+    for (var i = 0; i < allEnemies.length; i++) {
+        if ((allEnemies[i].x) <= player.x + 30 &&
+            (allEnemies[i].x + 30) >= (player.x) &&
+            (allEnemies[i].y)<= player.y + 30 &&
+            (allEnemies[i].y + 30) >= (player.y)) {
+        	var lives = 4;
+        	ctx.clearRect(0, 0, 500, 100);
+           if(this.lives>=1){
+           	this.lives--;
+           }else{
+            alert('YOU LOSE');
+           }
+
+
+
+     }
+
+     }
 };
 Player.prototype.handleInput = function(keyCode) {
 switch(keyCode){
@@ -92,6 +120,7 @@ switch(keyCode){
           break;
             }
 };
+
 Player.prototype.reset = function(){
     this.x = XRESET_LOC;
     this.y = YRESET_LOC;
@@ -113,14 +142,17 @@ var checkCollisions = function(){
             (allEnemies[i].x + 30) >= (player.x) &&
             (allEnemies[i].y)<= player.y + 30 &&
             (allEnemies[i].y + 30) >= (player.y)) {
-            this.score -= 1;
-            this.lives -= 1;
+        	var lives = 4;
+        	ctx.clearRect(0, 0, 500, 100);
+
+        	this.lives--;
+
           //alert('YOU LOSE');
-          score++;
           player.reset();
         }
     }
 };
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
