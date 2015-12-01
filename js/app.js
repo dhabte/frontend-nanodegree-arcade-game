@@ -18,16 +18,18 @@ var BUG2_SPEED = 300;
 var BUG3_SPEED = 400;
 var BUG4_SPEED = 250;
 var BUG5_SPEED = 250;
+var TEXT_SCOREX = 0;
+var TEXT_SCOREY = 30;
+var TEXT_LIVESX = 364;
+var TEXT_LIVESY = 30;
+
 var score = " ";
 var lives = 4;
 
-
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    // Variables are applied here to each of the instances,
+    // a helper is provided to easily load images
     this.x = x;
     this.y = y;
     this.speed =speed;
@@ -37,9 +39,8 @@ var Enemy = function(x,y,speed) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+    // Any movement is multiplied by the dt parameter to insure
+    // the game runs at the same speed for all computers.
     if(this.x <= CANVAS_WIDTH){
     this.x += 0.5*this.speed * dt;
     }else{
@@ -47,13 +48,12 @@ Enemy.prototype.update = function(dt) {
     }
 };
 
-
-// Draw the enemy on the screen, required method for game
+// the enemy is rendered on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
+// player class
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function(x,y,speed){
@@ -64,67 +64,62 @@ var Player = function(x,y,speed){
     this.score = score;
     this.lives = lives;
 };
+
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     ctx.font = '25pt Courier New';
-    ctx.fillStyle = 'orange';
-    ctx.fillText("Score: "+this.score, 0, 30);
-    ctx.fillText('Lives' + ' ' +this.lives, 364, 30);
+    ctx.fillStyle = 'blue';
+    ctx.fillText("Score: "+this.score, TEXT_SCOREX, TEXT_SCOREY);
+    ctx.fillText('Lives' + ' ' +this.lives, TEXT_LIVESX, TEXT_LIVESY);
 };
-//var player = new Player();
+
 Player.prototype.update = function() {
-	var score = 0;
-	var lives = 4;
+    var score = 0;
+    var lives = 4;
     if(this.y <= 0){
-    	ctx.clearRect(0, 0, 200, 200);
+        ctx.clearRect(0, 0, 200, 200);
         this.score++;
-        if(this.score>=10){
-        	alert('YOU WON');
+        if(this.score >= 10){
+            alert('YOU WON');
         }
-
-
-    this.reset();
+            this.reset();
     }
     for (var i = 0; i < allEnemies.length; i++) {
         if ((allEnemies[i].x) <= player.x + 30 &&
             (allEnemies[i].x + 30) >= (player.x) &&
             (allEnemies[i].y)<= player.y + 30 &&
             (allEnemies[i].y + 30) >= (player.y)) {
-        	var lives = 4;
-        	ctx.clearRect(0, 0, 500, 100);
-           if(this.lives>=1){
-           	this.lives--;
-           }else{
+            var lives = 4;
+            ctx.clearRect(0, 0, 500, 100);
+            if(this.lives>=1){
+                this.lives--;
+            }else{
             alert('YOU LOSE');
            }
-
-
-
-     }
-
-     }
+        }
+    }
 };
+
 Player.prototype.handleInput = function(keyCode) {
 switch(keyCode){
-        case 'left' : if(this.x > 0){
-          this.x -= -BUG_WIDTH;}
-          break;
-        case 'right': if(this.x < 400){
-          this.x += -BUG_WIDTH;}
-          break;
-        case 'up': if (this.y > 0 ) {
-          this.y -= 85;}
-          break;
-        case 'down': if(this.y < 300){
-          this.y += 85;}
-          break;
-            }
+    case 'left' : if(this.x > 0){
+        this.x -= -BUG_WIDTH;}
+        break;
+    case 'right': if(this.x < 400){
+        this.x += -BUG_WIDTH;}
+        break;
+    case 'up': if (this.y > 0 ) {
+        this.y -= 85;}
+        break;
+    case 'down': if(this.y < 300){
+        this.y += 85;}
+        break;
+    }
 };
 
 Player.prototype.reset = function(){
     this.x = XRESET_LOC;
     this.y = YRESET_LOC;
-
 };
 // Now instantiate your objects.
 var bug1 = new Enemy(BUG1_LOCX,BUG1_LOCY,BUG1_SPEED);
@@ -142,19 +137,18 @@ var checkCollisions = function(){
             (allEnemies[i].x + 30) >= (player.x) &&
             (allEnemies[i].y)<= player.y + 30 &&
             (allEnemies[i].y + 30) >= (player.y)) {
-        	var lives = 4;
-        	ctx.clearRect(0, 0, 500, 100);
+        var lives = 4;
+        ctx.clearRect(0, 0, 500, 100);
 
-        	this.lives--;
+        this.lives--;
 
-          //alert('YOU LOSE');
-          player.reset();
+        player.reset();
         }
     }
 };
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// This listens for key presses and sends the keys to the
+// Player.handleInput() method. This is given.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
