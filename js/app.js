@@ -20,10 +20,10 @@ var BUG4_SPEED = 250;
 var BUG5_SPEED = 250;
 var TEXT_SCOREX = 0;
 var TEXT_SCOREY = 30;
-var TEXT_LIVESX = 364;
+var TEXT_LIVESX = 360;
 var TEXT_LIVESY = 30;
 
-var score = " ";
+var score = 0;
 var lives = 4;
 
 // Enemies our player must avoid
@@ -74,8 +74,6 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.update = function() {
-    var score = 0;
-    var lives = 4;
     if(this.y <= 0){
         ctx.clearRect(0, 0, 200, 200);
         this.score++;
@@ -89,13 +87,13 @@ Player.prototype.update = function() {
             (allEnemies[i].x + 30) >= (player.x) &&
             (allEnemies[i].y)<= player.y + 30 &&
             (allEnemies[i].y + 30) >= (player.y)) {
-            var lives = 4;
             ctx.clearRect(0, 0, 500, 100);
-            if(this.lives>=1){
+            if(this.lives >= 1){
                 this.lives--;
-            }else{
-            alert('YOU LOSE');
-           }
+            }else
+            {
+                alert('GAME OVER');
+            }
         }
     }
 };
@@ -137,7 +135,6 @@ var checkCollisions = function(){
             (allEnemies[i].x + 30) >= (player.x) &&
             (allEnemies[i].y)<= player.y + 30 &&
             (allEnemies[i].y + 30) >= (player.y)) {
-        var lives = 4;
         ctx.clearRect(0, 0, 500, 100);
 
         this.lives--;
@@ -146,7 +143,6 @@ var checkCollisions = function(){
         }
     }
 };
-
 // This listens for key presses and sends the keys to the
 // Player.handleInput() method. This is given.
 document.addEventListener('keyup', function(e) {
