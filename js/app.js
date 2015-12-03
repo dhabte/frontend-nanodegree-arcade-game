@@ -76,25 +76,11 @@ Player.prototype.render = function() {
 Player.prototype.update = function() {
     if(this.y <= 0){
         ctx.clearRect(0, 0, 200, 200);
-        this.score++;
-        if(this.score >= 10){
+        this.score = this.score + 10;
+        if(this.score >= 100){
             alert('YOU WON');
         }
             this.reset();
-    }
-    for (var i = 0; i < allEnemies.length; i++) {
-        if ((allEnemies[i].x) <= player.x + 30 &&
-            (allEnemies[i].x + 30) >= (player.x) &&
-            (allEnemies[i].y)<= player.y + 30 &&
-            (allEnemies[i].y + 30) >= (player.y)) {
-            ctx.clearRect(0, 0, 500, 100);
-            if(this.lives >= 1){
-                this.lives--;
-            }else
-            {
-                alert('GAME OVER');
-            }
-        }
     }
 };
 
@@ -129,16 +115,21 @@ var bug5 = new Enemy(BUG5_LOCX,BUG5_LOCY,BUG5_SPEED);
 var allEnemies = [bug1, bug2, bug3, bug4, bug5];
 // Place the player object in a variable called player
 var player = new Player(XRESET_LOC,YRESET_LOC);
-var checkCollisions = function(){
-    for (var i = 0; i < allEnemies.length; i++) {
+
+Player.prototype.checkCollisions = function(){
+for (var i = 0; i < allEnemies.length; i++) {
         if ((allEnemies[i].x) <= player.x + 30 &&
             (allEnemies[i].x + 30) >= (player.x) &&
             (allEnemies[i].y)<= player.y + 30 &&
             (allEnemies[i].y + 30) >= (player.y)) {
         ctx.clearRect(0, 0, 500, 100);
 
-        this.lives--;
-
+        if(this.lives >= 1){
+                this.lives--;
+            }else{
+                alert('GAME OVER');
+                player.reset();
+            }
         player.reset();
         }
     }
