@@ -74,10 +74,11 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.update = function() {
+	ctx.clearRect(0, 0, 200, 200);
     if(this.y <= 0){
-        ctx.clearRect(0, 0, 200, 200);
+        //ctx.clearRect(0, 0, 200, 200);
         this.score = this.score + 10;
-        if(this.score >= 100){
+        if(this.score == 100){
             alert('YOU WON');
         }
             this.reset();
