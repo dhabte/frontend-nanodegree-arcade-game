@@ -23,9 +23,6 @@ var TEXT_SCOREY = 30;
 var TEXT_LIVESX = 360;
 var TEXT_LIVESY = 30;
 
-var score = 0;
-var lives = 4;
-
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
     // Variables are applied here to each of the instances,
@@ -42,7 +39,7 @@ Enemy.prototype.update = function(dt) {
     // Any movement is multiplied by the dt parameter to insure
     // the game runs at the same speed for all computers.
     if(this.x <= CANVAS_WIDTH){
-    this.x += 0.5*this.speed * dt;
+    this.x += 0.80*this.speed * dt;
     }else{
     this.x = BUG_WIDTH;
     }
@@ -56,6 +53,8 @@ Enemy.prototype.render = function() {
 // player class
 // This class requires an update(), render() and
 // a handleInput() method.
+var score = 0;
+var lives = 4;
 var Player = function(x,y,speed){
     this.x = x;
     this.y = y;
@@ -76,7 +75,6 @@ Player.prototype.render = function() {
 Player.prototype.update = function() {
 	ctx.clearRect(0, 0, 200, 200);
     if(this.y <= 0){
-        //ctx.clearRect(0, 0, 200, 200);
         this.score = this.score + 10;
         if(this.score == 100){
             alert('YOU WON');
@@ -124,12 +122,11 @@ for (var i = 0; i < allEnemies.length; i++) {
             (allEnemies[i].y)<= player.y + 30 &&
             (allEnemies[i].y + 30) >= (player.y)) {
         ctx.clearRect(0, 0, 500, 100);
-
+        this.score = this.score - 10;
         if(this.lives >= 1){
-                this.lives--;
+            this.lives--;
             }else{
                 alert('GAME OVER');
-                player.reset();
             }
         player.reset();
         }

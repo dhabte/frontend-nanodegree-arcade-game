@@ -21,8 +21,8 @@ Double click index.html from the folder to start the game. A start button, reset
 * down: moves the player down
 
 ## How points are allotted:
-* For any collision with the bug a point is deducted from the score and 1 life deducted from the number of lives.
-* When the player reaches the water a point is added to the score and the player is reset to the grass land.
+* For any collision with the bug 10 point is deducted from the score and 1 life deducted from the number of lives.
+* When the player reaches the water 10 point is added to the score and the player is reset to the grass land.
 * When the player reaches the water 10 times the game is won.
 * The player have 4 lives; for each collission with the bug 1 life is lost.
 * When all the 4 lives are lost game is over.
@@ -30,7 +30,7 @@ Double click index.html from the folder to start the game. A start button, reset
 ## How the game is built:
 
 The game is built using html5 and javaScript. index.html, css, engine.js, resouce.js and images are downloadeded or cloned from udacity repository. Editting the app.js to build the game is realy a great experiance. I learned how to use classes, methods, Object-Oriented JavaScript, this and Object prototypes.
-### Some of the methods I learned are:
+### Some of the methods I learned from this project are:
 * The render method
 * The update method
 * The handleInput method,
