@@ -117,10 +117,10 @@ var player = new Player(XRESET_LOC,YRESET_LOC);
 
 Player.prototype.checkCollisions = function(){
 for (var i = 0; i < allEnemies.length; i++) {
-        if ((allEnemies[i].x) <= player.x + 30 &&
-            (allEnemies[i].x + 30) >= (player.x) &&
-            (allEnemies[i].y)<= player.y + 30 &&
-            (allEnemies[i].y + 30) >= (player.y)) {
+        if ((allEnemies[i].x) <= this.x + 30 &&
+            (allEnemies[i].x + 30) >= (this.x) &&
+            (allEnemies[i].y)<= this.y + 30 &&
+            (allEnemies[i].y + 30) >= (this.y)) {
         ctx.clearRect(0, 0, 500, 100);
         this.score = this.score - 10;
         if(this.lives >= 1){
