@@ -128,7 +128,7 @@ for (var i = 0; i < allEnemies.length; i++) {
             }else{
                 alert('GAME OVER');
             }
-        player.reset();
+        this.reset();
         }
     }
 };
